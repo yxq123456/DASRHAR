@@ -1,0 +1,4 @@
+methods: [matched_gru, hard_reset, gru_d, dasr_no_decay, dasr_no_duration, dasr_fixed_gate, dasr_no_context, dasr]
+missing_rates: [0.3, 0.5]
+patterns: [single_burst, multi_burst, periodic]
+

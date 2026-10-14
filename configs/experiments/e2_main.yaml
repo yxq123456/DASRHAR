@@ -1,0 +1,13 @@
+seeds: [3407, 2026, 930]
+folds: [1, 2, 3, 4, 5]
+methods: [masked_early_fusion, modality_dropout, state_hold, hard_reset, gru_d, brits, matched_gru, dasr]
+epochs: 100
+patience: 15
+gradient_clip: 1.0
+clean_probability: 0.4
+outage_probability: 0.6
+patterns: [point, single_burst, multi_burst, periodic]
+missing_rate_range: [0.1, 0.5]
+validation_clean_weight: 0.4
+validation_outage_weight: 0.6
+

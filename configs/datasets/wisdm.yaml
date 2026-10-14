@@ -1,0 +1,17 @@
+dataset: wisdm
+sample_rate: 20
+window_seconds: 5.0
+step_seconds: 2.5
+label_purity: 0.8
+num_classes: 18
+retained_labels: []
+max_windows_per_subject_activity: 13
+streams:
+  phone_acc: 3
+  phone_gyro: 3
+  watch_acc: 3
+  watch_gyro: 3
+raw_dir: data/raw/wisdm
+processed_path: data/processed/wisdm/windows.npz
+split_path: manifests/subject_splits/wisdm.yaml
+

@@ -1,0 +1,16 @@
+dataset: pamap2
+sample_rate: 100
+window_seconds: 5.0
+step_seconds: 2.5
+label_purity: 0.8
+num_classes: 12
+retained_labels: [1, 2, 3, 4, 5, 6, 7, 12, 13, 16, 17, 24]
+streams:
+  hand_imu: 13
+  chest_imu: 13
+  ankle_imu: 13
+  heart_rate: 1
+raw_dir: data/raw/pamap2
+processed_path: data/processed/pamap2/windows.npz
+split_path: manifests/subject_splits/pamap2.yaml
+

@@ -1,0 +1,8 @@
+model: tcn_dasr
+hidden_dim: 128
+num_layers: 3
+dropout: 0.1
+duration_dim: 32
+repair_width: 128
+encoder_kernels: [5, 3]
+

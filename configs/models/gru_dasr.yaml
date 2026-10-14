@@ -1,0 +1,12 @@
+model: dasr
+hidden_dim: 128
+num_layers: 1
+dropout: 0.1
+duration_dim: 32
+repair_width: 128
+encoder_kernels: [5, 3]
+use_decay: true
+use_duration: true
+use_context: true
+adaptive_gate: true
+
