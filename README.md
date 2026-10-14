@@ -1,6 +1,8 @@
-# DASR-HAR Reproduction Code
+# DASR-HAR
 
-This repository provides the reproduction code for *Duration-Aware State Recovery for Multi-Sensor Human Activity Recognition under Intermittent Sensor Outages*. It includes preprocessing for MHEALTH, PAMAP2, and WISDM; the fixed five-fold subject-wise splits used in the paper; four rate-matched outage geometries; DASR and its principal baselines; training and evaluation pipelines; fixed-window and continuous recovery evaluation; statistical analysis; and efficiency profiling.
+DASR-HAR is an open-source framework for robust multi-sensor human activity recognition under intermittent sensor outages. It provides Duration-Aware State Recovery, a causal event-triggered module that repairs the temporal state of a returning sensor stream using its retained state, current observation, outage duration, and context from sensors that remained online.
+
+The project includes preprocessing for MHEALTH, PAMAP2, and WISDM; five-fold subject-wise evaluation; four rate-matched outage geometries; DASR and strong missing-sensor baselines; training and evaluation pipelines; fixed-window and continuous recovery analysis; statistical testing; and efficiency profiling.
 
 ## Environment
 
@@ -12,7 +14,7 @@ python -m venv .venv
 pip install -e .
 ```
 
-The environment reported in the paper uses Python 3.11.6, PyTorch 2.2.1, CUDA 12.1, and cuDNN 8.9.7. Core Python dependencies are pinned in `requirements.txt`.
+The reference environment uses Python 3.11.6, PyTorch 2.2.1, CUDA 12.1, and cuDNN 8.9.7. Core Python dependencies are pinned in `requirements.txt`.
 
 ## Raw data layout
 
@@ -35,7 +37,7 @@ python scripts/download_data.py --dataset all
 
 If a data provider requires manual license confirmation, download and extract the corresponding archive into the layout above.
 
-## Minimal reproduction workflow
+## Quick start
 
 ```powershell
 python scripts/prepare_data.py --dataset mhealth
@@ -46,7 +48,7 @@ python scripts/evaluate.py --dataset mhealth --model dasr --fold 1 --seed 3407 -
 python scripts/evaluate.py --dataset mhealth --model dasr --fold 1 --seed 3407 --condition single_burst_30
 ```
 
-The complete study uses `mhealth`, `pamap2`, and `wisdm`, five subject-wise folds, and seeds `3407`, `2026`, and `930`. Robustness training uses 40% clean windows and 60% interrupted windows, equal probability over the four outage geometries, and missing rates sampled from `[0.1, 0.5]`. Checkpoints maximize:
+The default experiment protocol uses `mhealth`, `pamap2`, and `wisdm`, five subject-wise folds, and seeds `3407`, `2026`, and `930`. Robustness training uses 40% clean windows and 60% interrupted windows, equal probability over the four outage geometries, and missing rates sampled from `[0.1, 0.5]`. Checkpoints maximize:
 
 ```text
 0.4 * clean Macro-F1 + 0.6 * mean outage Macro-F1
@@ -79,7 +81,6 @@ The complete study uses `mhealth`, `pamap2`, and `wisdm`, five subject-wise fold
 - `scripts/analyze_mechanism.py`: aggregate StateGap and repair-gate diagnostics
 - `scripts/statistical_analysis.py`: run paired subject-level bootstrap and Wilcoxon analysis
 - `scripts/profile_efficiency.py`: measure parameters, FLOPs, model size, and latency
-- `scripts/reproduce_tables.py`: aggregate prediction-derived result tables
 - `scripts/plot_results.py`: generate geometry, recovery, and mechanism figures
 
 ## Outputs
@@ -92,4 +93,4 @@ Synthetic outages are applied after normalization with training-subject statisti
 
 Validation and test manifests are deterministic and shared by every compared method. Training masks are generated online from a separate random stream. Missing observations never update the DASR recurrent cell. During an outage, the affected state decays toward a learned stream prior. At re-entry, repair uses the duration-decayed state, current observation, completed-outage duration, and masked-mean context from streams that were already online.
 
-`scripts/reproduce_tables.py` derives tables from actual prediction files and does not contain hard-coded paper results. Raw datasets, trained checkpoints, and generated results are not included in the repository.
+Result tables are derived directly from prediction files and do not use hard-coded values. Raw datasets, trained checkpoints, and generated results are not included in the repository.
